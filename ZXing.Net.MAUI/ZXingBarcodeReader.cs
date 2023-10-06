@@ -34,9 +34,15 @@ namespace ZXing.Net.Maui.Readers
 			LuminanceSource ls = default;
 
 #if ANDROID
-			ls = new ByteBufferYUVLuminanceSource(image.Data, w, h, 0, 0, w, h);
+
+			//Unsere Änderung am Original Quellcode um Probleme mit Samsung, Xiaomi und wahrscheinlich auch anderen Geräten auszugeleichen
+			//Lösung von Github siehe: https://github.com/Redth/ZXing.Net.Maui/issues/107
+
+
+            Java.Nio.ByteBuffer imageData = Bitmap2Yuv420p(image.Data, w, h);
+			ls = new ByteBufferYUVLuminanceSource(imageData, w, h, 0, 0, w, h);
 #elif MACCATALYST || IOS
-			ls = new CVPixelBufferBGRA32LuminanceSource(image.Data, w, h);
+            ls = new CVPixelBufferBGRA32LuminanceSource(image.Data, w, h);
 #endif
 
 			if (Options.Multiple)
@@ -48,5 +54,37 @@ namespace ZXing.Net.Maui.Readers
 
 			return null;
 		}
+		
+#if ANDROID
+        public static unsafe Java.Nio.ByteBuffer Bitmap2Yuv420p(Java.Nio.ByteBuffer buffer, int w, int h)
+        {
+            byte[] image = new byte[buffer.Remaining()];
+            buffer.Get(image);
+
+			byte[] imageYuv = new byte[w * h];
+
+			fixed (byte* packet = image)
+			{
+				byte* pimage = packet;
+
+                fixed (byte* packetOut = imageYuv)
+				{
+                    byte* pimageOut = packetOut;
+
+                    for (int i = 0; i < (w * h); i++)
+                    {
+                        byte r = *pimage++;
+                        byte g = *pimage++;
+                        byte b = *pimage++;
+                        pimage++;   // a
+                        *pimageOut++ = (byte)(((66 * r + 129 * g + 25 * b) >> 8) + 16);
+                    }
+                }
+            }
+
+			return Java.Nio.ByteBuffer.Wrap(imageYuv);
+        }
+#endif
+
 	}
 }
