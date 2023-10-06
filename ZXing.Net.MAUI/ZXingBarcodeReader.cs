@@ -54,8 +54,12 @@ namespace ZXing.Net.Maui.Readers
 
 			return null;
 		}
-		
+
 #if ANDROID
+
+			//Unsere Änderung am Original Quellcode um Probleme mit Samsung, Xiaomi und wahrscheinlich auch anderen Geräten auszugeleichen
+			//Lösung von Github siehe: https://github.com/Redth/ZXing.Net.Maui/issues/107
+
         public static unsafe Java.Nio.ByteBuffer Bitmap2Yuv420p(Java.Nio.ByteBuffer buffer, int w, int h)
         {
             byte[] image = new byte[buffer.Remaining()];
@@ -86,5 +90,5 @@ namespace ZXing.Net.Maui.Readers
         }
 #endif
 
-	}
+    }
 }

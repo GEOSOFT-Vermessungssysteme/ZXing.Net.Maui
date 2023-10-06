@@ -63,7 +63,13 @@ namespace ZXing.Net.Maui
 				// Frame by frame analyze
 				imageAnalyzer = new ImageAnalysis.Builder()
 					.SetDefaultResolution(new Android.Util.Size(640, 480))
-                    .SetOutputImageFormat(ImageAnalysis.OutputImageFormatRgba8888)
+
+                    //Unsere Änderung am Original Quellcode um Probleme mit Samsung, Xiaomi und wahrscheinlich auch anderen Geräten auszugeleichen
+                    //Lösung von Github siehe: https://github.com/Redth/ZXing.Net.Maui/issues/107
+					.SetOutputImageFormat(ImageAnalysis.OutputImageFormatRgba8888)
+				    //
+
+
                     .SetBackpressureStrategy(ImageAnalysis.StrategyKeepOnlyLatest)
                     .SetOutputImageRotationEnabled(true)
  					.Build();
