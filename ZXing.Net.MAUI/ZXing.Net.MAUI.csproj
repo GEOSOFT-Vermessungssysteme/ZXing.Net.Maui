@@ -10,7 +10,7 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<UseSystemResourceKeys>false</UseSystemResourceKeys>
 		<Copyright>Copyright © Redth</Copyright>
-		<PackageProjectUrl>https://github.com/redth/ZXing.Net.Maui</PackageProjectUrl>
+		<PackageProjectUrl>https://github.com/GEOSOFT-Vermessungssysteme/ZXing.Net.Maui</PackageProjectUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<GitThisAssemblyMetadata>True</GitThisAssemblyMetadata>
 		<RepositoryUrl></RepositoryUrl>
