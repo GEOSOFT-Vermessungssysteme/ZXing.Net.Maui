@@ -1,3 +1,8 @@
+# GEOSOFT Eintrag
+
+Quellcode ist vollständig in GEOSOFT.MUI aufgenommen worden. Dieser Fork bleibt nur als Erinnerung bestehen.
+
+
 # ZXing.Net.MAUI
 
 The successor to ZXing.Net.Mobile: barcode scanning and generation for .NET MAUI applications
